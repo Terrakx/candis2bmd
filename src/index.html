@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="de">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>ER-Import Konverter</title>
+    <link rel="stylesheet" href="/styles.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Manrope:wght@600&display=swap" rel="stylesheet">
+  </head>
+
+  <body>
+    <header class="header">
+      <h1>Candis2BMD <span style="font-weight: 400; opacity: 0.5; font-size: 0.75em;">v1.0</span></h1>
+    </header>
+
+    <main class="main-content">
+      <section class="card">
+        <h2 class="card-title">Aktionen & Einstellungen</h2>
+        <div class="config-grid">
+          <!-- Row 1: Numbers & Symbols -->
+          <div class="input-group">
+            <label>Nächste BelegNr</label>
+            <div class="input-wrapper">
+              <input type="number" id="nextBelegNr" value="1" />
+            </div>
+          </div>
+          <div class="input-group">
+            <label>Belegsymbol</label>
+            <div class="input-wrapper">
+              <input type="text" id="belegSymbol" value="ER" placeholder="z.B. ER" />
+            </div>
+          </div>
+
+          <!-- Row 2: Source -->
+          <div class="input-group span-2">
+            <label>Quellverzeichnis</label>
+            <div class="input-wrapper">
+              <input type="text" id="sourceDir" readonly placeholder="Wählen Sie einen Ordner..." />
+              <button class="icon-btn" id="browseSource">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"></path></svg>
+              </button>
+            </div>
+          </div>
+
+          <!-- Row 3: Target -->
+          <div class="input-group span-2">
+            <label>Ziel CSV (Export)</label>
+            <div class="input-wrapper">
+              <input type="text" id="targetFile" readonly placeholder="Export-Datei auswählen..." />
+              <button class="icon-btn" id="browseTarget">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"></path><polyline points="17 21 17 13 7 13 7 21"></polyline><polyline points="7 3 7 8 15 8"></polyline></svg>
+              </button>
+            </div>
+          </div>
+        </div>
+        <div class="actions">
+          <button class="secondary" id="scanBtn" style="display:none;">Belege Scannen</button>
+          <button class="primary" id="exportBtn">CSV Erzeugen</button>
+        </div>
+      </section>
+
+      <section class="table-container">
+        <table>
+          <thead>
+            <tr>
+              <th width="30"><input type="checkbox" id="selectAll" checked /></th>
+              <th>Rechnungs-ID</th>
+              <th>Lieferant</th>
+              <th>Betrag (Brutto)</th>
+              <th width="80" style="text-align: center;">PDF</th>
+              <th>Status</th>
+            </tr>
+          </thead>
+          <tbody id="invoiceTable">
+            <!-- Dynamically populated -->
+          </tbody>
+        </table>
+      </section>
+
+      <section class="log-area" id="logArea">
+        <!-- Log entries here -->
+      </section>
+    </main>
+
+    <script src="main.js"></script>
+  </body>
+</html>
