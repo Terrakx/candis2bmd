@@ -1,7 +1,24 @@
-# Tauri + Vanilla
+# Candis2BMD
 
-This template should help get you started developing with Tauri in vanilla HTML, CSS and Javascript.
+Ein Desktop-Tool (Rust/Tauri) zur Konvertierung von Candis-Daten in ein importierbares CSV-File (Vorerfassung Buchungen).
 
-## Recommended IDE Setup
+## Installation & Start (Development)
 
-- [VS Code](https://code.visualstudio.com/) + [Tauri](https://marketplace.visualstudio.com/items?itemName=tauri-apps.tauri-vscode) + [rust-analyzer](https://marketplace.visualstudio.com/items?itemName=rust-lang.rust-analyzer)
+1. Abhängigkeiten installieren:
+   ```powershell
+   npm install
+   ```
+
+2. Entwicklungsmodus starten:
+   ```powershell
+   npm run tauri dev
+   ```
+
+## Build (Production)
+Um eine installierbare `.exe` Datei zu erstellen:
+```powershell
+npm run tauri build
+```
+
+## Lizenz
+Dieses Projekt steht unter der **MIT-Lizenz**. Siehe [LICENSE](./LICENSE) für Details.
