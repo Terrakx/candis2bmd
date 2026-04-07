@@ -1,6 +1,16 @@
-# Candis2BMD
+# Candis2BMD - ER-Import Konverter
 
-Ein Desktop-Tool (Rust/Tauri) zur Konvertierung von Candis-Daten in ein importierbares CSV-File (Vorerfassung Buchungen).
+Ein Desktop-Tool (Rust/Tauri) zur Konvertierung von Candis-Daten in das BMD-Format (ER-Import).
+
+## Features
+- Automatischer Import von Candis CSV/Export Dateien
+- Konvertierung in das BMD-kompatible Format
+- Einfache Benutzeroberfläche für schnelle Abwicklung
+
+## Voraussetzungen
+Stelle sicher, dass folgende Software auf deinem System installiert ist:
+- [Node.js](https://nodejs.org/) (für das Frontend)
+- [Rust](https://www.rust-lang.org/) (für den Tauri Core)
 
 ## Installation & Start (Development)
 

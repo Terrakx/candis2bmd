@@ -60,7 +60,7 @@ body {
   display: flex;
   flex-direction: column;
   gap: 2rem;
-  overflow-y: auto;
+  overflow: hidden; /* Avoid double scrollbars, children scroll internally */
 }
 
 .card {
@@ -193,13 +193,12 @@ button.secondary {
 
 .table-container {
   flex: 1;
-  min-height: 300px;
+  min-height: 200px;
   background: var(--surface-container-lowest);
   border-radius: var(--radius-md);
   box-shadow: var(--shadow-sm);
-  overflow: hidden;
-  display: flex;
-  flex-direction: column;
+  overflow-y: auto;
+  position: relative;
 }
 
 table {
@@ -219,6 +218,10 @@ th {
   color: var(--text-secondary);
   text-transform: uppercase;
   letter-spacing: 0.05em;
+  position: sticky;
+  top: 0;
+  background: var(--surface-container-high);
+  z-index: 10;
 }
 
 td {

@@ -9,6 +9,7 @@ use std::sync::Mutex;
 use std::path::Path;
 use std::fs;
 use std::ffi::OsStr;
+use std::io;
 
 struct AppState {
     invoices: Mutex<Vec<Invoice>>,
@@ -77,6 +78,45 @@ fn scan_folder(folder_path: String) -> Result<Vec<Invoice>, String> {
 }
 
 #[tauri::command]
+fn extract_zip(zip_path: String) -> Result<String, String> {
+    let path = Path::new(&zip_path);
+    if !path.exists() {
+        return Err("Zip-Datei existiert nicht".to_string());
+    }
+
+    let file = fs::File::open(path).map_err(|e| e.to_string())?;
+    let mut archive = zip::ZipArchive::new(file).map_err(|e| e.to_string())?;
+
+    // Create a folder named like the zip (without extension) in the same directory
+    let output_dir = path.with_extension("");
+    if !output_dir.exists() {
+        fs::create_dir_all(&output_dir).map_err(|e| e.to_string())?;
+    }
+
+    for i in 0..archive.len() {
+        let mut file = archive.by_index(i).map_err(|e| e.to_string())?;
+        let outpath = match file.enclosed_name() {
+            Some(path) => output_dir.join(path),
+            None => continue,
+        };
+
+        if file.is_dir() {
+            fs::create_dir_all(&outpath).map_err(|e| e.to_string())?;
+        } else {
+            if let Some(p) = outpath.parent() {
+                if !p.exists() {
+                    fs::create_dir_all(p).map_err(|e| e.to_string())?;
+                }
+            }
+            let mut outfile = fs::File::create(&outpath).map_err(|e| e.to_string())?;
+            io::copy(&mut file, &mut outfile).map_err(|e| e.to_string())?;
+        }
+    }
+
+    Ok(output_dir.to_string_lossy().to_string())
+}
+
+#[tauri::command]
 fn generate_csv(invoices: Vec<Invoice>, target_file: String, start_nr: i32, symbol: String) -> Result<String, String> {
     let path = Path::new(&target_file);
     csv_writer::write_bmd_csv(&invoices, path, start_nr, &symbol)?;
@@ -118,7 +158,8 @@ pub fn run() {
             scan_folder, 
             generate_csv, 
             get_last_beleg_nr,
-            get_base_dir
+            get_base_dir,
+            extract_zip
         ])
         .run(tauri::generate_context!())
         .expect("error while running tauri application");

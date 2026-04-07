@@ -8,6 +8,7 @@ const invoiceTable = document.getElementById("invoiceTable");
 const scanBtn = document.getElementById("scanBtn");
 const exportBtn = document.getElementById("exportBtn");
 const browseSource = document.getElementById("browseSource");
+const browseZip = document.getElementById("browseZip");
 const browseTarget = document.getElementById("browseTarget");
 const sourceDirInput = document.getElementById("sourceDir");
 const targetFileInput = document.getElementById("targetFile");
@@ -115,6 +116,31 @@ browseSource.addEventListener("click", async () => {
     }
   } catch (e) {
     log("Dialog-Fehler (Source): " + e, "error");
+  }
+});
+
+browseZip.addEventListener("click", async () => {
+  try {
+    const selected = await open({
+      directory: false,
+      multiple: false,
+      title: "Zip-Datei wählen",
+      filters: [{ name: "Zip Archiv", extensions: ["zip"] }]
+    });
+    if (selected) {
+      log(`Entpacke Zip-Datei: ${selected}...`);
+      try {
+        const extractedDir = await invoke("extract_zip", { zipPath: selected });
+        sourceDirInput.value = extractedDir;
+        targetFileInput.value = `${extractedDir}\\bmd_import.csv`;
+        log(`Erfolgreich entpackt nach: ${extractedDir}`, "success");
+        scan();
+      } catch (err) {
+        log(`Fehler beim Entpacken: ${err}`, "error");
+      }
+    }
+  } catch (e) {
+    log("Dialog-Fehler (Zip): " + e, "error");
   }
 });
 
