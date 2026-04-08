@@ -37,6 +37,7 @@ pub fn write_bmd_csv(invoices: &[Invoice], target_path: &Path, start_beleg_nr: i
                                 .parse::<i32>().unwrap().to_string();
             let uva_period_str = entry.date.format("%Y%m").to_string();
             
+            let info_part = entry.information.as_ref().map(|i| format!(" | {}", i)).unwrap_or_default();
             let fields = [
                 "0".to_string(), // satzart
                 entry.bp_account_no.as_deref().unwrap_or("99990").to_string(), // konto
@@ -45,7 +46,7 @@ pub fn write_bmd_csv(invoices: &[Invoice], target_path: &Path, start_beleg_nr: i
                 date_str.clone(), // belegdatum
                 belegnr_str.clone(), // belegnr
                 format_eu_number(entry.amount_gross), // betrag
-                format!("{} {} {}", symbol, entry.supplier_name, inv.consolidated_invoice_id), // Use dynamic symbol
+                format!("{} {} {}{}", symbol, entry.supplier_name, inv.consolidated_invoice_id, info_part), // Use dynamic symbol + info
                 symbol.to_string(), // buchsymbol (Dynamic)
                 "2".to_string(), // buchcode
                 period_str.clone(), // periode

@@ -111,6 +111,7 @@ pub fn parse_invoice_xml(filepath: &Path) -> Option<Invoice> {
                 let mut e_bp_acc = None;
                 let mut e_tax = Decimal::ZERO;
                 let mut e_supplier = String::new();
+                let mut e_info = None;
 
                 let mut ledger_buf = Vec::new();
                 loop {
@@ -128,6 +129,7 @@ pub fn parse_invoice_xml(filepath: &Path) -> Option<Invoice> {
                                 "bpaccountno" => e_bp_acc = Some(text),
                                 "tax" => e_tax = Decimal::from_str(&text.replace(",", ".")).unwrap_or(Decimal::ZERO),
                                 "suppliername" => e_supplier = text,
+                                "information" => if !text.is_empty() { e_info = Some(text) },
                                 _ => ()
                             }
                         }
@@ -147,6 +149,7 @@ pub fn parse_invoice_xml(filepath: &Path) -> Option<Invoice> {
                     tax_amount: Decimal::ZERO,
                     date: e_date,
                     supplier_name: e_supplier,
+                    information: e_info,
                 });
             }
             Ok(Event::Eof) => break,

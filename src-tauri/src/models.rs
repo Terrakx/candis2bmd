@@ -12,6 +12,7 @@ pub struct InvoiceEntry {
     pub tax_amount: Decimal,
     pub date: NaiveDate,
     pub supplier_name: String,
+    pub information: Option<String>,
 }
 
 #[derive(Debug, Serialize, Deserialize, Clone)]
