@@ -47,7 +47,7 @@ pub fn write_bmd_csv(invoices: &[Invoice], target_path: &Path, start_beleg_nr: i
                 format_eu_number(entry.amount_gross), // betrag
                 format!("{} {} {}", symbol, entry.supplier_name, inv.consolidated_invoice_id), // Use dynamic symbol
                 symbol.to_string(), // buchsymbol (Dynamic)
-                "1".to_string(), // buchcode
+                "2".to_string(), // buchcode
                 period_str.clone(), // periode
                 uva_period_str.clone(), // uva-periode
                 date_str.clone(), // uva-kursdatum
