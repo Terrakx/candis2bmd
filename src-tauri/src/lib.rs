@@ -123,8 +123,14 @@ fn generate_csv(invoices: Vec<Invoice>, target_file: String, start_nr: i32, symb
     
     // Save last beleg nr
     let selected_count = invoices.iter().filter(|i| i.selected).count() as i32;
-    let next_nr = start_nr + selected_count - 1;
-    let _ = std::fs::write("../data/letzte_belegnr.txt", (next_nr).to_string());
+    if selected_count > 0 {
+        let next_nr = start_nr + selected_count - 1;
+        let data_path = Path::new("../data");
+        if !data_path.exists() {
+            let _ = fs::create_dir_all(data_path);
+        }
+        let _ = fs::write(data_path.join("letzte_belegnr.txt"), next_nr.to_string());
+    }
     
     Ok("CSV erfolgreich erstellt!".to_string())
 }
