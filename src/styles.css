@@ -44,7 +44,20 @@ body {
   background: var(--surface);
   display: flex;
   align-items: center;
-  justify-content: flex-start;
+  justify-content: space-between;
+}
+
+.github-link {
+  color: var(--text-primary);
+  opacity: 0.7;
+  transition: opacity 0.2s, transform 0.2s;
+  display: flex;
+  align-items: center;
+}
+
+.github-link:hover {
+  opacity: 1;
+  transform: scale(1.1);
 }
 
 .header h1 {
