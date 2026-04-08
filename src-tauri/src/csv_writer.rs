@@ -52,7 +52,7 @@ pub fn write_bmd_csv(invoices: &[Invoice], target_path: &Path, start_beleg_nr: i
                 uva_period_str.clone(), // uva-periode
                 date_str.clone(), // uva-kursdatum
                 "".to_string(), // steuercode
-                format_eu_number(entry.tax_percent), // prozent
+                if entry.tax_percent.is_zero() { "".to_string() } else { format_eu_number(entry.tax_percent) }, // prozent
                 "".to_string(), // steuer
                 "".to_string(), // uidnr
                 doc_path.clone(), // dokument
