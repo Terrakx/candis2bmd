@@ -125,7 +125,7 @@ fn generate_csv(invoices: Vec<Invoice>, target_file: String, start_nr: i32, symb
     let selected_count = invoices.iter().filter(|i| i.selected).count() as i32;
     if selected_count > 0 {
         let next_nr = start_nr + selected_count - 1;
-        let data_path = Path::new("../data");
+        let data_path = Path::new("data");
         if !data_path.exists() {
             let _ = fs::create_dir_all(data_path);
         }
@@ -137,7 +137,7 @@ fn generate_csv(invoices: Vec<Invoice>, target_file: String, start_nr: i32, symb
 
 #[tauri::command]
 fn get_last_beleg_nr() -> i32 {
-    let path = Path::new("../data/letzte_belegnr.txt");
+    let path = Path::new("data/letzte_belegnr.txt");
     if let Ok(content) = std::fs::read_to_string(path) {
         if let Ok(nr) = content.trim().parse::<i32>() {
             return nr;
